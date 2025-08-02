@@ -1,0 +1,133 @@
+@import "tailwindcss";
+@plugin "tailwind-scrollbar";
+@plugin "./bg-stripe.js";
+
+@plugin "daisyui" {
+  exclude: rootscrollgutter;
+}
+
+@plugin "daisyui/theme" {
+  name: "bumblebee";
+  default: false;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(97% 0 0);
+  --color-base-300: oklch(92% 0 0);
+  --color-base-content: oklch(20% 0 0);
+  --color-primary: oklch(85% 0.199 91.936);
+  --color-primary-content: oklch(42% 0.095 57.708);
+  --color-secondary: oklch(75% 0.183 55.934);
+  --color-secondary-content: oklch(40% 0.123 38.172);
+  --color-accent: oklch(0% 0 0);
+  --color-accent-content: oklch(100% 0 0);
+  --color-neutral: oklch(37% 0.01 67.558);
+  --color-neutral-content: oklch(92% 0.003 48.717);
+  --color-info: oklch(74% 0.16 232.661);
+  --color-info-content: oklch(39% 0.09 240.876);
+  --color-success: oklch(76% 0.177 163.223);
+  --color-success-content: oklch(37% 0.077 168.94);
+  --color-warning: oklch(82% 0.189 84.429);
+  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-error: oklch(70% 0.191 22.216);
+  --color-error-content: oklch(39% 0.141 25.723);
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+
+@plugin "daisyui/theme" {
+  name: "halloween";
+  default: false;
+  prefersdark: false;
+  color-scheme: "dark";
+  --color-base-100: oklch(21% 0.006 56.043);
+  --color-base-200: oklch(14% 0.004 49.25);
+  --color-base-300: oklch(0% 0 0);
+  --color-base-content: oklch(84.955% 0 0);
+  --color-primary: oklch(77.48% 0.204 60.62);
+  --color-primary-content: oklch(19.693% 0.004 196.779);
+  --color-secondary: oklch(45.98% 0.248 305.03);
+  --color-secondary-content: oklch(89.196% 0.049 305.03);
+  --color-accent: oklch(64.8% 0.223 136.073);
+  --color-accent-content: oklch(0% 0 0);
+  --color-neutral: oklch(24.371% 0.046 65.681);
+  --color-neutral-content: oklch(84.874% 0.009 65.681);
+  --color-info: oklch(54.615% 0.215 262.88);
+  --color-info-content: oklch(90.923% 0.043 262.88);
+  --color-success: oklch(62.705% 0.169 149.213);
+  --color-success-content: oklch(12.541% 0.033 149.213);
+  --color-warning: oklch(66.584% 0.157 58.318);
+  --color-warning-content: oklch(13.316% 0.031 58.318);
+  --color-error: oklch(65.72% 0.199 27.33);
+  --color-error-content: oklch(13.144% 0.039 27.33);
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+
+@plugin "daisyui/theme" {
+  name: "forest";
+  default: false;
+  prefersdark: false;
+  color-scheme: "dark";
+  --color-base-100: oklch(20.84% 0.008 17.911);
+  --color-base-200: oklch(18.522% 0.007 17.911);
+  --color-base-300: oklch(16.203% 0.007 17.911);
+  --color-base-content: oklch(83.768% 0.001 17.911);
+  --color-primary: oklch(68.628% 0.185 148.958);
+  --color-primary-content: oklch(0% 0 0);
+  --color-secondary: oklch(69.776% 0.135 168.327);
+  --color-secondary-content: oklch(13.955% 0.027 168.327);
+  --color-accent: oklch(70.628% 0.119 185.713);
+  --color-accent-content: oklch(14.125% 0.023 185.713);
+  --color-neutral: oklch(30.698% 0.039 171.364);
+  --color-neutral-content: oklch(86.139% 0.007 171.364);
+  --color-info: oklch(72.06% 0.191 231.6);
+  --color-info-content: oklch(0% 0 0);
+  --color-success: oklch(64.8% 0.15 160);
+  --color-success-content: oklch(0% 0 0);
+  --color-warning: oklch(84.71% 0.199 83.87);
+  --color-warning-content: oklch(0% 0 0);
+  --color-error: oklch(71.76% 0.221 22.18);
+  --color-error-content: oklch(0% 0 0);
+  --radius-selector: 1rem;
+  --radius-field: 2rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+
+
+.navbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to bottom, var(--color-base-100), transparent);
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+  z-index: -10;
+  opacity: 1;
+}
+
+.drawer-toggle:checked~.drawer-content .navbar::before {
+  @media (width < 64rem) {
+    opacity: 0;
+  }
+}

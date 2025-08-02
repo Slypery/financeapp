@@ -1,0 +1,40 @@
+{
+  "name": "financeapp",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . --trace-warnings",
+    "dev": "concurrently \"npm:dev:react\" \"npm:dev:electron\"",
+    "dev:react": "cd renderer && npm run dev",
+    "dev:electron": "wait-on http://localhost:5173 && electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "productName": "FinanceApp",
+    "appId": "com.example.financeapp",
+    "files": [
+      "main.js",
+      "ipc/**/*",
+      "renderer/dist/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "chokidar": "^4.0.3",
+    "concurrently": "^9.2.0",
+    "electron": "^37.2.0",
+    "electron-builder": "^26.0.12",
+    "wait-on": "^8.0.3"
+  },
+  "dependencies": {
+    "@journeyapps/sqlcipher": "^5.3.1"
+  }
+}
