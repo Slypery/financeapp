@@ -27,8 +27,7 @@ function CreateNewDB() {
 
         const extName = await window.electronAPI.extName(fileName);
         const dbPath = await window.electronAPI.pathJoin(folderPath, extName ? fileName : `${fileName}.db`);
-        const result = await window.electronAPI.createDBFile(dbPath, password);
-        console.log(result);
+        const result = await window.electronAPI.auth.createDBFile(dbPath, password);
         if (result.success) {
             showAlert("alert", "success", "Success: Database has been created. You can login with your database now.");
         } else {

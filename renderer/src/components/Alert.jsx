@@ -1,6 +1,6 @@
 function Alert({ id }) {
     return (
-        <div id={id} role="alert" datatype="" className="alert alert-soft hidden"></div>
+        <div id={id} role="alert" className="alert alert-soft hidden"></div>
     );
 }
 

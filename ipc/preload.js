@@ -9,8 +9,16 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	pathJoin: (...segments) => ipcRenderer.invoke('path-join', segments),
 	extName: (p) => ipcRenderer.invoke('ext-name', p),
 
-	// dbHandlers
-	createDBFile: (db_path, password) => ipcRenderer.invoke('create-db-file', db_path, password),
-	loginWithDBFile: (db_path, password) => ipcRenderer.invoke('login-with-db-file', db_path, password),
-	logout: () => ipcRenderer.invoke('logout'),
+	// auth
+	auth: {
+		createDBFile: (db_path, password) => ipcRenderer.invoke('create-db-file', db_path, password),
+		loginWithDBFile: (db_path, password) => ipcRenderer.invoke('login-with-db-file', db_path, password),
+		logout: () => ipcRenderer.invoke('logout'),
+	},
+
+	// transaction
+	transaction: {},
+
+	// accounts/sources of fund
+	accounts: {},
 });

@@ -1,24 +1,49 @@
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
-import TwClassPreload from './components/TwClassPreload';
 import DefaultLayout from './layouts/DefaultLayout';
 import LoginLayout from './layouts/LoginLayout';
 import Dashboard from './pages/Dashboard';
-import SourceOfFund from './pages/SourceOfFund';
+import Accounts from './pages/Accounts';
 import Transaction from './pages/Transaction';
-import Goals from './pages/Goals';
 import Login from './pages/Login';
 import CreateNewDB from './pages/CreateNewDB';
 import { useEffect } from 'react';
-import useMeta from './hooks/useMeta';
 import AnimatedLayout from './components/AnimatedLayout';
+import useTheme from './hooks/useTheme';
 
 function App() {
-	const theme = useMeta((state) => state.meta.app_theme);
+	const theme = useTheme((s) => s.theme);
 
+	// set theme
 	useEffect(() => {
 		document.documentElement.setAttribute('data-theme', theme);
 	}, [theme]);
+
+	// auto close dropdown
+	useEffect(() => {
+		const closeDropWhenClickedOutside = (e) => {
+				document.querySelectorAll('details.dropdown.open').forEach((detailsEl) => {
+					if (detailsEl.contains(e.target)) return;
+					detailsEl.querySelector('summary').click();
+				});
+		};
+
+		const closeDropWhenClickedEsc = (e) => {
+			if (e.key === 'Escape') {
+				document.querySelectorAll('details.dropdown.open>summary').forEach((summaryEl) => {
+					summaryEl.click();
+				});
+			}
+		};
+
+		document.addEventListener('click', closeDropWhenClickedOutside);
+		document.addEventListener('keydown', closeDropWhenClickedEsc);
+
+		return () => {
+			document.removeEventListener('click', closeDropWhenClickedOutside);
+			document.removeEventListener('keydown', closeDropWhenClickedEsc);
+		};
+	}, []);
 	return (
 		<>
 			<Routes>
@@ -26,9 +51,8 @@ function App() {
 					<Route index element={<Navigate to="/auth/login" replace />} />
 					<Route path="pages" element={<DefaultLayout />}>
 						<Route path="dashboard" element={<Dashboard />} />
-						<Route path="source-of-fund" element={<SourceOfFund />} />
+						<Route path="accounts" element={<Accounts />} />
 						<Route path="transaction" element={<Transaction />} />
-						<Route path="goals" element={<Goals />} />
 					</Route>
 					<Route path="auth" element={<LoginLayout />}>
 						<Route path="login" element={<Login />} />

@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import useTitle from "../hooks/useTitle";
 import Alert, { closeAlert, showAlert } from "../components/Alert";
 import useMeta from "../hooks/useMeta";
-import useTransitonKey from "../hooks/useTransitionKey";
 function Login() {
     const setTitle = useTitle();
     setTitle('Login');
@@ -23,7 +22,7 @@ function Login() {
         }
     };
 
-    const setMeta = useMeta((state) => state.setMeta);
+    const setMeta = useMeta((s) => s.setMeta);
     const navigate = useNavigate();
     const handleLogin = async () => {
         if (!dbPath || !password) {
@@ -31,7 +30,7 @@ function Login() {
             return;
         }
 
-        const result = await window.electronAPI.loginWithDBFile(dbPath, password);
+        const result = await window.electronAPI.auth.loginWithDBFile(dbPath, password);
         if (result.success) {
             const sharedData = await window.electronAPI.sharedData();
             setMeta(sharedData.metaData);

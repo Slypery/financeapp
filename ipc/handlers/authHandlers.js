@@ -31,7 +31,6 @@ safeHandle('create-db-file', async (_, dbPath, password) => {
                         INSERT INTO meta (key, value) VALUES
                         ('app_name', 'Finance App'),
                         ('app_version', '1.0.0'),
-                        ('app_theme', 'forest'),
                         ('username', 'User'),
                         ('total_balance', 0),
                         ('currency', 'IDR'),
@@ -62,16 +61,15 @@ safeHandle('create-db-file', async (_, dbPath, password) => {
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             source_id INTEGER NOT NULL,
                             destination_id INTEGER,
-                            category_id INTEGER,
                             type TEXT NOT NULL,
                             amount REAL NOT NULL,
-                            balance_after REAL NOT NULL,
+							source_balance_after REAL NOT NULL,
+                            destination_balance_after REAL NOT NULL,
                             note TEXT,
                             date TEXT NOT NULL,
                             created_at TEXT DEFAULT CURRENT_TIMESTAMP,
                             FOREIGN KEY (source_id) REFERENCES accounts(id),
-                            FOREIGN KEY (destination_id) REFERENCES accounts(id),
-                            FOREIGN KEY (category_id) REFERENCES categories(id)
+                            FOREIGN KEY (destination_id) REFERENCES accounts(id)
                         )
                     `);
 
@@ -110,7 +108,7 @@ safeHandle('login-with-db-file', async (_, dbPath, password) => {
 				db.all('SELECT * FROM meta', (err, rows) => {
 					if (err) {
 						db.close(() => {
-							resolve({ success: false, error: 'Failed to load metadata.' });
+							resolve({ success: false, error: 'Failed to load metadata, this can be caused by wrong password or corrupted database.' });
 						});
 					} else {
 						global.db = db;
@@ -118,7 +116,10 @@ safeHandle('login-with-db-file', async (_, dbPath, password) => {
 						for (const row of rows) {
 							metaData[row.key] = row.value;
 						}
+						metaData['db_file_name'] = path.basename(dbPath);
 						global.sharedData.metaData = metaData;
+						console.log(JSON.stringify(global.sharedData.metaData));
+						
 						resolve({ success: true });
 					}
 				});

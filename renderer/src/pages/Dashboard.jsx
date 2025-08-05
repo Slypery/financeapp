@@ -1,6 +1,7 @@
 import useTitle from '../hooks/useTitle';
 function Dashboard() {
-    useTitle('Dashboard');
+    const setTitle = useTitle();
+    setTitle('Dashboard');
     return (
         <div className="flex flex-col">
             <div className="stats stats-horizontal @max-3xl/content:stats-vertical [&_svg]:size-8 py-16 mx-auto">
