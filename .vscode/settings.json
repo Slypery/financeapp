@@ -19,9 +19,7 @@
         "main.js": true,
         "node_modules": true,
         "release": true,
-        "ipc/handlersAutoload.js": true,
-        "ipc/ipcHandlerUtils.js": true,
-        ".vscode": true
+        "ipc/handlersAutoload.js": true
     },
     "hide-files.files": [
         "renderer/.gitignore",
@@ -38,8 +36,6 @@
         "main.js",
         "node_modules",
         "release",
-        "ipc/handlersAutoload.js",
-        "ipc/ipcHandlerUtils.js",
-        ".vscode"
+        "ipc/handlersAutoload.js"
     ]
 }

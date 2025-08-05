@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 const Menu = ({ children, className = "", ...props }) => {
     return (
-        <ul className={`menu bg-base-200 rounded-box ${className}`} {...props}>
+        <ul className={`menu ${className}`} {...props}>
             {children}
         </ul>
     )

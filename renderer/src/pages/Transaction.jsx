@@ -2,8 +2,10 @@ import { useState } from 'react';
 import Dropdown from '../components/Dropdown';
 import useTitle from '../hooks/useTitle';
 function Transaction() {
+    const setTitle = useTitle();
+    setTitle('Transaction');
+
     const [filters, setFilters] = useState({});
-    useTitle('Transaction');
     return (
         <div className="flex flex-col gap-2 p-8">
             <div className="top-18 z-1 sticky flex items-center gap-2">
@@ -25,14 +27,14 @@ function Transaction() {
                             <label className="col-span-2 label">Date Range</label>
                             <label className="input">
                                 From:
-                                <input value={filters.from} max={filters.to} onChange={(e) => setFilters({ ...filters, from: e.target.value })} type="date" className="grow" placeholder="dd/mm/yyyy" />
+                                <input value={filters.from ?? ''} max={filters.to} onChange={(e) => setFilters({ ...filters, from: e.target.value })} type="date" className="grow" placeholder="dd/mm/yyyy" />
                             </label>
                             <label className="input">
                                 To:
-                                <input value={filters.to} min={filters.from} onChange={(e) => setFilters({ ...filters, to: e.target.value })} type="date" className="grow" placeholder="dd/mm/yyyy" />
+                                <input value={filters.to ?? ''} min={filters.from} onChange={(e) => setFilters({ ...filters, to: e.target.value })} type="date" className="grow" placeholder="dd/mm/yyyy" />
                             </label>
                             <label className="col-span-2 label">Transaction Type</label>
-                            <select value={filters.type} onChange={(e) => setFilters({ ...filters, type: e.target.value })} className="col-span-2 w-full select">
+                            <select value={filters.type ?? ''} onChange={(e) => setFilters({ ...filters, type: e.target.value })} className="col-span-2 w-full select">
                                 <option>All</option>
                                 <option value="tranfer">Transfer</option>
                                 <option value="income">Income</option>
@@ -40,7 +42,7 @@ function Transaction() {
                                 <option value="debt">Debt</option>
                             </select>
                             <label className="col-span-2 label">Account Involved</label>
-                            <select value={filters.account} onChange={(e) => setFilters({ ...filters, account: e.target.value })} className="col-span-2 w-full select">
+                            <select value={filters.account ?? ''} onChange={(e) => setFilters({ ...filters, account: e.target.value })} className="col-span-2 w-full select">
                                 <option>All</option>
                                 <option value="Wallet">Wallet</option>
                                 <option value="BCA Account">BCA Account</option>
