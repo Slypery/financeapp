@@ -2,6 +2,7 @@ const { dialog } = require('electron');
 const { safeHandle } = require('../ipcHandlerUtils.js');
 const path = require("path");
 const fs = require("fs");
+const { promisify } = require('util');
 const sqlite3 = require('@journeyapps/sqlcipher').verbose();
 
 safeHandle('create-db-file', async (_, dbPath, password) => {
@@ -33,6 +34,7 @@ safeHandle('create-db-file', async (_, dbPath, password) => {
                         ('app_version', '1.0.0'),
                         ('username', 'User'),
                         ('total_balance', 0),
+						('locale', 'id-ID'),
                         ('currency', 'IDR'),
                         ('last_opened', datetime('now')),
                         ('created_at', datetime('now'))
@@ -42,7 +44,7 @@ safeHandle('create-db-file', async (_, dbPath, password) => {
                         CREATE TABLE accounts (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name TEXT NOT NULL,
-                            type TEXT NOT NULL,
+                            "type" TEXT NOT NULL,
                             initial_balance REAL DEFAULT 0 NOT NULL,
                             balance REAL DEFAULT 0 NOT NULL,
                             note TEXT,
@@ -52,21 +54,16 @@ safeHandle('create-db-file', async (_, dbPath, password) => {
                     `);
 
 					db.run(`
-                        INSERT INTO accounts (name, type, note) VALUES
-                        ('External account', 'virtual', 'Used only for creating income transaction')
-                    `);
-
-					db.run(`
                         CREATE TABLE transactions (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            source_id INTEGER NOT NULL,
+							title TEXT NOT NULL,
+                            "type" TEXT NOT NULL,
+                            source_id INTEGER,
                             destination_id INTEGER,
-                            type TEXT NOT NULL,
                             amount REAL NOT NULL,
-							source_balance_after REAL NOT NULL,
-                            destination_balance_after REAL NOT NULL,
+							source_balance_after REAL,
+                            destination_balance_after REAL,
                             note TEXT,
-                            date TEXT NOT NULL,
                             created_at TEXT DEFAULT CURRENT_TIMESTAMP,
                             FOREIGN KEY (source_id) REFERENCES accounts(id),
                             FOREIGN KEY (destination_id) REFERENCES accounts(id)
@@ -112,14 +109,24 @@ safeHandle('login-with-db-file', async (_, dbPath, password) => {
 						});
 					} else {
 						global.db = db;
+						global.dbAll = promisify(db.all).bind(db);
+						global.dbGet = promisify(db.get).bind(db);
+						global.dbRun = (sql, params = []) => {
+							return new Promise((resolve, reject) => {
+								db.run(sql, params, function (err) {
+									if (err) return reject(err);
+									resolve({ lastID: this.lastID, changes: this.changes });
+								});
+							});
+						}
+						global.dbExec = promisify(db.exec).bind(db);
 						let metaData = {};
 						for (const row of rows) {
 							metaData[row.key] = row.value;
 						}
 						metaData['db_file_name'] = path.basename(dbPath);
 						global.sharedData.metaData = metaData;
-						console.log(JSON.stringify(global.sharedData.metaData));
-						
+
 						resolve({ success: true });
 					}
 				});

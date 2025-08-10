@@ -89,7 +89,7 @@ function DefaultLayout() {
                     </motion.div>
                 </AnimatePresence>
             </div>
-            <div className="z-20 shadow backdrop-blur-lg drawer-side">
+            <div className="z-20 shadow backdrop-blur-sm drawer-side">
                 <label htmlFor="sidebar" aria-label="close sidebar" className="drawer-overlay"></label>
                 <Menu className="bg-base-200 p-4 w-80 min-h-full [&_li_svg]:size-5 [&_li_svg]:text-primary/60 text-base-content">
                     <div className="bg-stripe-diagonal mb-4 px-3 py-2 border border-base-content/10 rounded-[var(--radius-box)] stripe-color-base-content/5">

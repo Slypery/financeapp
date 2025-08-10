@@ -2,7 +2,8 @@ import { useRef, useState } from "react";
 import useTitle from "../hooks/useTitle";
 import { Link, useRoutes } from "react-router-dom";
 import Alert, { showAlert, closeAlert } from "../components/Alert";
-function CreateNewDB() {
+
+const CreateNewDB = () => {
     const setTitle = useTitle();
     setTitle('Create New DB');
 
@@ -35,7 +36,7 @@ function CreateNewDB() {
         }
     };
     return (
-        <form onSubmit={(e) => { e.preventDefault(); createDatabase() }} className="bg-stripe-cross mx-6 px-8 pt-4 pb-8 border-2 border-base-content/20 rounded-box w-lg fieldset stripe-color-base-content/10">
+        <form onSubmit={(e) => { e.preventDefault(); createDatabase() }} className="bg-base-100/50 backdrop-blur-xs bg-stripe-cross mx-6 px-8 pt-4 pb-8 border-2 border-base-content/20 rounded-box w-lg fieldset stripe-color-base-content/10">
             <legend className="text-4xl -translate-y-1 fieldset-legend">Create New Database</legend>
             <Alert id="alert" />
             <label className="label">Save Folder</label>

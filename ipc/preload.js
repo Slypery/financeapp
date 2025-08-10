@@ -17,8 +17,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	},
 
 	// transaction
-	transaction: {},
+	transaction: {
+		getAll: (where) => ipcRenderer.invoke('get_all_transactions', where),
+		addIncome: (data) => ipcRenderer.invoke('add_income', data),
+		addExpense: (data) => ipcRenderer.invoke('add_expense', data),
+	},
 
 	// accounts/sources of fund
-	accounts: {},
+	accounts: {
+		all: (where) => ipcRenderer.invoke('get-all-accounts', where),
+	},
 });

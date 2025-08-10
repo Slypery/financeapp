@@ -1,5 +1,6 @@
 import useTitle from '../hooks/useTitle';
-function Accounts() {
+
+const Accounts = () => {
     const setTitle = useTitle();
     setTitle('Accounts / Sources Of Funds');
     return (

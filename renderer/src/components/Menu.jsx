@@ -22,6 +22,8 @@ const MenuLink = ({ children, ...props }) => {
     )
 }
 
+
+
 const CollapsibleMenuItemContext = createContext();
 
 const CollapsibleMenuItem = ({ children, className = "", open = false, ...props }) => {
@@ -39,7 +41,7 @@ const CollapsibleMenuItem = ({ children, className = "", open = false, ...props 
 CollapsibleMenuItem.Button = ({ children, className = "", ...props }) => {
   const [ isOpen, setIsOpen ] = useContext(CollapsibleMenuItemContext);
   return (
-    <button onClick={() => setIsOpen(!isOpen)} className={`menu-dropdown-toggle ${isOpen ? "menu-dropdown-show" : ""} ${className}`} {...props}>
+    <button onClick={() => setIsOpen(!isOpen)} className={`menu-dropdown-toggle ${isOpen ? "menu-dropdown-show " : ""}${className}`} {...props}>
       {children}
     </button>
   );
@@ -65,5 +67,5 @@ CollapsibleMenuItem.Content = ({ children, className = "", ...props }) => {
   );
 };
 
-export { MenuItem, MenuLink, CollapsibleMenuItem }
+export { MenuItem, MenuLink, CollapsibleMenuItem };
 export default Menu;

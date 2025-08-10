@@ -1,5 +1,7 @@
+import AlertDialog, { AlertDialogShowButton } from '../components/AlertDialog';
 import useTitle from '../hooks/useTitle';
-function Dashboard() {
+
+const Dashboard = () => {
     const setTitle = useTitle();
     setTitle('Dashboard');
     return (
